@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/zzz.css">
+
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <!-- angular ui router -->
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+    <!-- result -->
+    <script src="modules/result/zzzController.js"></script>
+    <script src="modules/result/zzztFactory.js"></script>
+    <script src="modules/result/zzzRouter.js"></script>
+    <!--angular app -->
+    <script src="app.js"></script>
+    <script src="appRouter.js"></script>
+</head>
+
+<body ng-app="app">
+    <nav class="navbar navbar-inverse  navbar-static-top">
+        <div class="navbar-header">
+            <a class="navbar-brand"> Signal Monitor </a>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div ui-view></div>
+    </div>
+</body>
+
+</html>
