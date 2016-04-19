@@ -1,0 +1,23 @@
+{
+  "name": "signal-monitor",
+  "description": "",
+  "main": "",
+  "authors": [
+    "smartytwiti <marwen109@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/mtrabelsi/real-time-signal-monitoring-poc",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.4",
+    "angular-ui-router": "^0.2.18"
+  }
+}

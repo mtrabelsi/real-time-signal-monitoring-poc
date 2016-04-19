@@ -4,23 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <base href="/">
-
     <!-- CSS -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/zzz.css">
-
-
-    <script src="bower_components/angular/angular.min.js"></script>
+    <link rel="stylesheet" href="bower/bootstrap/dist/css/bootstrap.css">
+    <script src="bower/angular/angular.min.js"></script>
     <!-- angular ui router -->
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-
-    <!-- result -->
-    <script src="modules/result/zzzController.js"></script>
-    <script src="modules/result/zzztFactory.js"></script>
-    <script src="modules/result/zzzRouter.js"></script>
+    <script src="bower/angular-ui-router/release/angular-ui-router.js"></script>
+    <!-- init -->
+    <script src="app/modules/init/initController.js"></script>
+    <script src="app/modules/init/initRouter.js"></script>
+    <!-- poc 1 -->
+    <script src="app/modules/poc1/poc1Controller.js"></script>
+    <script src="app/modules/poc1/poc1Router.js"></script>
+    <!-- poc 2 -->
+    <script src="app/modules/poc2/poc2Controller.js"></script>
+    <script src="app/modules/poc2/poc2Router.js"></script>
     <!--angular app -->
-    <script src="app.js"></script>
-    <script src="appRouter.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/appRouter.js"></script>
+    <script src="app/appController.js"></script>
 </head>
 
 <body ng-app="app">
@@ -29,8 +30,7 @@
             <a class="navbar-brand"> Signal Monitor </a>
         </div>
     </nav>
-
-    <div class="container-fluid">
+    <div class="container-fluid" ng-controller="AppController">
         <div ui-view></div>
     </div>
 </body>

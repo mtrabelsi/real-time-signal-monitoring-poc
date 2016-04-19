@@ -1,1 +1,1 @@
-angular.module('app', []);
+angular.module('app', ['app.init' ,'app.poc1', 'app.poc2']);
