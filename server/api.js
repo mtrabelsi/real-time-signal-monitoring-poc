@@ -4,6 +4,19 @@ var utils = require('./utils/utils');
 
 var helper = require('./utils/helper');
 
+//the require is a singleton so the change will affect all the api
+var constant = require('./utils/constant');//we're gonna change this by api
+
+
+app.put('/range', function(req, res, next) {
+    constant.range.step1.minRange = -(req.body.newRange / 2);
+    constant.range.step1.maxRange = req.body.newRange / 2;
+    res.json(constant);
+});
+
+app.get('/range', function(req, res, next) {
+    res.json(constant);
+});
 
 
 app.get('/data', function(req, res, next) {
