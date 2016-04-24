@@ -14,4 +14,14 @@
     <div class="col-md-10">
         <canvas id="barChar" width="1000" height="300"></canvas>
     </div>
+     <div class="col-md-2">
+     <b>Start date:</b></br>
+     {{metadata.startDate | date:"MM/dd/yyyy 'at' h:mma"}}</br>
+     <hr>
+     <b>Totale number of Sample:</b></br>
+     {{metadata.nbrOfSamples}}</br>
+     <hr>
+     <b>Totale number of collis:</b></br>
+     {{metadata.nbrOfTotalColisions}}</br>
+     </div>
 </div>

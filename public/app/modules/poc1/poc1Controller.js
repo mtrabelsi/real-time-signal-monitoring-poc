@@ -3,6 +3,12 @@ angular
     .controller('Poc1Controller', poc1Controller);
 
 function poc1Controller($scope, $http, $interval) {
+ 
+    $scope.metadata = {
+        startDate : new Date(),
+        nbrOfSamples : 0,
+        nbrOfTotalColisions : 0
+    };
 
     $scope.MAX_VIEW_PORT = 10; // max data before shifting
     $scope.graphConfig = {
@@ -56,12 +62,16 @@ function poc1Controller($scope, $http, $interval) {
     var updateGraph = function() {
         $http.get('/data')
             .then(function(res) {
-            	if(res.data.DS1==res.data.DS2) nbrOfCollision++;
+            	if(res.data.DS1==res.data.DS2) {
+                    nbrOfCollision++;
+                    $scope.metadata.nbrOfTotalColisions++;
+                }
                 var t = (1 / $scope.graphConfig.frequency); //intervle in seconde
                 myLiveChart.addData([res.data.DS1, res.data.DS2], (xGraph * t) + 's');
                 // shifting our view
                 if(xGraph > $scope.MAX_VIEW_PORT) myLiveChart.removeData();
                 xGraph++;
+                $scope.metadata.nbrOfSamples++;
             });
     };
 
