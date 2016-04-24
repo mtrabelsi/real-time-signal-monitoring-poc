@@ -10,8 +10,10 @@ function poc1Controller($scope, $http, $interval) {
         frequency: 2
     };
 
-    var canvas = document.getElementById('updating-chart'),
-        ctx = canvas.getContext('2d'),
+    var canvasGraph = document.getElementById('graph'),
+    	canvasBarChar = document.getElementById('barChar'),
+        ctxGraph = canvasGraph.getContext('2d'),
+        ctxBarChar = canvasBarChar.getContext('2d'),
         startingData = {
             labels: [],
             datasets: [{
@@ -29,33 +31,62 @@ function poc1Controller($scope, $http, $interval) {
             }]
         };
 
-    // Reduce the animation steps for demo clarity.
-    var myLiveChart = new Chart(ctx).Line(startingData, {});
+		 var data = {
+		    labels: [],
+		    datasets: [
+		        {
+		            label: "My First dataset",
+		            fillColor: "rgba(220,220,220,0.5)",
+		            strokeColor: "rgba(220,220,220,0.8)",
+		            highlightFill: "rgba(220,220,220,0.75)",
+		            highlightStroke: "rgba(220,220,220,1)",
+		            data: []
+		        }
+		    ]
+		};
 
-    var i = 0;
+    // discret graph
+    var myLiveChart = new Chart(ctxGraph).Line(startingData, {});
+    //bar chart
+    var myBarChart = new Chart(ctxBarChar).Bar(data, {});
+
+    var nbrOfCollision = 0;
+
+    var xGraph = 0;
     var updateGraph = function() {
         $http.get('/data')
             .then(function(res) {
+            	if(res.data.DS1==res.data.DS2) nbrOfCollision++;
                 var t = (1 / $scope.graphConfig.frequency); //intervle in seconde
-                myLiveChart.addData([res.data.DS1, res.data.DS2], (i * t) + 's');
+                myLiveChart.addData([res.data.DS1, res.data.DS2], (xGraph * t) + 's');
                 // shifting our view
-                if(i > $scope.MAX_VIEW_PORT) myLiveChart.removeData();
-                i++;
+                if(xGraph > $scope.MAX_VIEW_PORT) myLiveChart.removeData();
+                xGraph++;
             });
+    };
+
+
+    var xBar = 1;
+    var updateBar = function() {
+                myBarChart.addData([nbrOfCollision], xBar + 'min');//intervle of 1 minute
+                nbrOfCollision = 0;//reset the nbr of collision for the next minute
+                // shifting our view
+                if(xBar > $scope.MAX_VIEW_PORT) myBarChart.removeData();
+                xBar++;
     }
+    var intervalBar = $interval(updateBar, 1000 * 60);//1 min
 
-
-    var interval = null;
+    var intervalGraph = null;
     $scope.$watch('graphConfig', function(newValue, oldValue) {
         if (newValue.range != oldValue.range) {
             $http.put('/range', { newRange: newValue.range }).then(function(res) {
                 console.log('range changed', res);
             });
         }
-        if (newValue.frequency != oldValue.frequency || !interval) {
-            $interval.cancel(interval);
+        if (newValue.frequency != oldValue.frequency || !intervalGraph) {
+            $interval.cancel(intervalGraph);
             var t = (1 / newValue.frequency) * 1000; // interval in millisecond
-            interval = $interval(updateGraph, t);
+            intervalGraph = $interval(updateGraph, t);
         }
 
     }, true);
