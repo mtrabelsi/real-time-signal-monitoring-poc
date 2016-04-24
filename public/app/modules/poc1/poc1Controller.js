@@ -3,11 +3,11 @@ angular
     .controller('Poc1Controller', poc1Controller);
 
 function poc1Controller($scope, $http, $interval) {
- 
+
     $scope.metadata = {
-        startDate : new Date(),
-        nbrOfSamples : 0,
-        nbrOfTotalColisions : 0
+        startDate: new Date(),
+        nbrOfSamples: 0,
+        nbrOfTotalColisions: 0
     };
 
     $scope.MAX_VIEW_PORT = 10; // max data before shifting
@@ -17,7 +17,7 @@ function poc1Controller($scope, $http, $interval) {
     };
 
     var canvasGraph = document.getElementById('graph'),
-    	canvasBarChar = document.getElementById('barChar'),
+        canvasBarChar = document.getElementById('barChar'),
         ctxGraph = canvasGraph.getContext('2d'),
         ctxBarChar = canvasBarChar.getContext('2d'),
         startingData = {
@@ -37,19 +37,17 @@ function poc1Controller($scope, $http, $interval) {
             }]
         };
 
-		 var data = {
-		    labels: [],
-		    datasets: [
-		        {
-		            label: "My First dataset",
-		            fillColor: "rgba(220,220,220,0.5)",
-		            strokeColor: "rgba(220,220,220,0.8)",
-		            highlightFill: "rgba(220,220,220,0.75)",
-		            highlightStroke: "rgba(220,220,220,1)",
-		            data: []
-		        }
-		    ]
-		};
+    var data = {
+        labels: [],
+        datasets: [{
+            label: "My First dataset",
+            fillColor: "rgba(220,220,220,0.5)",
+            strokeColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            highlightStroke: "rgba(220,220,220,1)",
+            data: []
+        }]
+    };
 
     // discret graph
     var myLiveChart = new Chart(ctxGraph).Line(startingData, {});
@@ -62,14 +60,14 @@ function poc1Controller($scope, $http, $interval) {
     var updateGraph = function() {
         $http.get('/data')
             .then(function(res) {
-            	if(res.data.DS1==res.data.DS2) {
+                if (res.data.DS1 == res.data.DS2) {
                     nbrOfCollision++;
                     $scope.metadata.nbrOfTotalColisions++;
                 }
                 var t = (1 / $scope.graphConfig.frequency); //intervle in seconde
                 myLiveChart.addData([res.data.DS1, res.data.DS2], (xGraph * t) + 's');
                 // shifting our view
-                if(xGraph > $scope.MAX_VIEW_PORT) myLiveChart.removeData();
+                if (xGraph > $scope.MAX_VIEW_PORT) myLiveChart.removeData();
                 xGraph++;
                 $scope.metadata.nbrOfSamples++;
             });
@@ -78,13 +76,13 @@ function poc1Controller($scope, $http, $interval) {
 
     var xBar = 1;
     var updateBar = function() {
-                myBarChart.addData([nbrOfCollision], xBar + 'min');//intervle of 1 minute
-                nbrOfCollision = 0;//reset the nbr of collision for the next minute
-                // shifting our view
-                if(xBar > $scope.MAX_VIEW_PORT) myBarChart.removeData();
-                xBar++;
+        myBarChart.addData([nbrOfCollision], xBar + 'min'); //intervle of 1 minute
+        nbrOfCollision = 0; //reset the nbr of collision for the next minute
+        // shifting our view
+        if (xBar > $scope.MAX_VIEW_PORT) myBarChart.removeData();
+        xBar++;
     }
-    var intervalBar = $interval(updateBar, 1000 * 60);//1 min
+    var intervalBar = $interval(updateBar, 1000 * 60); //1 min
 
     var intervalGraph = null;
     $scope.$watch('graphConfig', function(newValue, oldValue) {
@@ -100,5 +98,9 @@ function poc1Controller($scope, $http, $interval) {
         }
 
     }, true);
+
+    $scope.printReport = function() {
+        window.print();
+    };
 
 }

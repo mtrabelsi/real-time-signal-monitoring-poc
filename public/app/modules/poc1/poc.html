@@ -3,25 +3,26 @@
         <canvas id="graph" width="1000" height="300"></canvas>
     </div>
     <div class="col-md-2">
-    	Range:
-        <input type="number" class="form-control" ng-click="updateConfig()" ng-model="graphConfig.range" />
-        Frequency:
-        <input type="number" class="form-control"  ng-click="updateConfig()" ng-model="graphConfig.frequency" />
+        Range:
+        <input type="number" class="form-control" ng-click="updateConfig()" ng-model="graphConfig.range" /> Frequency:
+        <input type="number" class="form-control" ng-click="updateConfig()" ng-model="graphConfig.frequency" /></br>
+        <button ng-click="printReport()" class="btn btn-lg btn-default">
+            <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print report
+        </button>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-10">
         <canvas id="barChar" width="1000" height="300"></canvas>
     </div>
-     <div class="col-md-2">
-     <b>Start date:</b></br>
-     {{metadata.startDate | date:"MM/dd/yyyy 'at' h:mma"}}</br>
-     <hr>
-     <b>Totale number of Sample:</b></br>
-     {{metadata.nbrOfSamples}}</br>
-     <hr>
-     <b>Totale number of collis:</b></br>
-     {{metadata.nbrOfTotalColisions}}</br>
-     </div>
+    <div class="col-md-2">
+        <b>Start date:</b></br>
+        {{metadata.startDate | date:"MM/dd/yyyy 'at' h:mma"}}</br>
+        <hr>
+        <b>Totale number of Sample:</b></br>
+        {{metadata.nbrOfSamples}}</br>
+        <hr>
+        <b>Totale number of collis:</b></br>
+        {{metadata.nbrOfTotalColisions}}</br>
+    </div>
 </div>
