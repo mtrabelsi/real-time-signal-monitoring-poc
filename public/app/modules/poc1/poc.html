@@ -1,1 +1,13 @@
-poc 1
+<div class="row">
+    <div class="col-md-10">
+        <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true" chart-series="series" chart-click="onClick">
+        </canvas>
+    </div>
+    <div class="col-md-2">
+    	Range:
+        <input type="number" class="form-control" ng-click="updateConfig()" ng-model="graphConfig.range" />
+        Frequency:
+        <input type="number" class="form-control"  ng-click="updateConfig()" ng-model="graphConfig.frequency" />
+    </div>
+</div>
+
