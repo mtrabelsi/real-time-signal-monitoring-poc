@@ -1,39 +1,49 @@
 angular
-    .module('app.poc1', ['ui.router', 'chart.js'])
+    .module('app.poc1', ['ui.router'])
     .controller('Poc1Controller', poc1Controller);
 
 function poc1Controller($scope, $http, $interval) {
-    
-    $scope.MAX_VIEW_PORT = 10;// max data before shifting
+
+    $scope.MAX_VIEW_PORT = 10; // max data before shifting
     $scope.graphConfig = {
         range: 250,
         frequency: 2
     };
 
-    $scope.labels = [];
-    $scope.series = ['DS1', 'DS2'];
-    $scope.data = [[],[]];
+    var canvas = document.getElementById('updating-chart'),
+        ctx = canvas.getContext('2d'),
+        startingData = {
+            labels: [],
+            datasets: [{
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                data: []
+            }, {
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                data: []
+            }]
+        };
+
+    // Reduce the animation steps for demo clarity.
+    var myLiveChart = new Chart(ctx).Line(startingData, {});
 
     var i = 0;
     var updateGraph = function() {
         $http.get('/data')
             .then(function(res) {
-
-                $scope.data[0].push(res.data.DS1);
-                $scope.data[1].push(res.data.DS2);
-                //get interval in second (formula: t = 1/f)
-                var t = (1 / $scope.graphConfig.frequency);//intervle in seconde
-                $scope.labels.push((i*t)+'s');
+                var t = (1 / $scope.graphConfig.frequency); //intervle in seconde
+                myLiveChart.addData([res.data.DS1, res.data.DS2], (i * t) + 's');
+                // shifting our view
+                if(i > $scope.MAX_VIEW_PORT) myLiveChart.removeData();
                 i++;
-
-                if ($scope.labels.length >= $scope.MAX_VIEW_PORT) {
-                    $scope.data[0].shift();
-                    $scope.data[1].shift();
-                    $scope.labels.shift();
-                }
-
             });
     }
+
 
     var interval = null;
     $scope.$watch('graphConfig', function(newValue, oldValue) {
