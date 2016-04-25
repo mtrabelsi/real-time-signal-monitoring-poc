@@ -50,7 +50,7 @@ function poc1Controller($scope, $http, $interval, $window) {
     };
 
     // discret graph
-    var myLiveChart = new Chart(ctxGraph).Line(startingData, {});
+    var myLiveChart = new Chart(ctxGraph).Line(startingData, {animationSteps: 7});
     //bar chart
     var myBarChart = new Chart(ctxBarChar).Bar(data, {});
 
