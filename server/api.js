@@ -5,7 +5,7 @@ var utils = require('./utils/utils');
 var helper = require('./utils/helper');
 
 //the require is a singleton so the change will affect all the api
-var constant = require('./utils/constant');//we're gonna change this by api
+var constant = require('./utils/constant'); //we're gonna change this by api
 
 
 app.put('/range', function(req, res, next) {
@@ -21,10 +21,10 @@ app.get('/range', function(req, res, next) {
 
 app.get('/data/poc1', function(req, res, next) {
 
-var data = {
-    DS1: null,
-    DS2: null
-};
+    var data = {
+        DS1: null,
+        DS2: null
+    };
 
     utils.urandomPromise(1).then(function(urandomBuffer) {
         data.DS1 = helper.normalize(urandomBuffer[0]);
@@ -45,10 +45,10 @@ var data = {
 
 app.get('/data/poc2', function(req, res, next) {
 
-var data = {
-    DS1: null,
-    DS2: null
-};
+    var data = {
+        DS1: null,
+        DS2: null
+    };
 
     utils.urandomPromise(1).then(function(urandomBuffer) {
         data.DS1 = helper.normalizeProc2(urandomBuffer[0]);
@@ -65,4 +65,11 @@ var data = {
     });
 
 
+});
+
+app.get('/word/:wordIndex', function(req, res, next) {
+    helper.getShakespeareContent().then(function(shakespeareBook) {
+        var index = req.params.wordIndex;
+        (index >= 0) ? res.send(shakespeareBook[index]): res.send('no luck :( ');
+    });
 });
