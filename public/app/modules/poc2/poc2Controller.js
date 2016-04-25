@@ -2,7 +2,7 @@ angular
     .module('app.poc2', ['ui.router'])
     .controller('Poc2Controller', poc2Controller);
 
-function poc2Controller($scope, $interval, $http) {
+function poc2Controller(CanvasGraphFactory, CanvasBarChartFactory, MAX_VIEW_PORT,GRAPH_CONFIG, $scope, $interval, $http) {
 
 	 $scope.metadata = {
         startDate: new Date(),
@@ -10,48 +10,18 @@ function poc2Controller($scope, $interval, $http) {
         nbrOfTotalDistinct: 0
     };
 
-    $scope.MAX_VIEW_PORT = 10; // max data before shifting
     $scope.graphConfig = {
-        frequency: 20
+        frequency: GRAPH_CONFIG.frequency
     };
 
-    var canvasGraph = document.getElementById('graph'),
-        canvasBarChar = document.getElementById('barChar'),
-        ctxGraph = canvasGraph.getContext('2d'),
-        ctxBarChar = canvasBarChar.getContext('2d'),
-        startingData = {
-            labels: [],
-            datasets: [{
-                fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
-                data: []
-            }, {
-                fillColor: "rgba(151,187,205,0.2)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#fff",
-                data: []
-            }]
-        };
-
-    var data = {
-        labels: [],
-        datasets: [{
-            label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",
-            data: []
-        }]
-    };
 
     // discret graph
-    var myLiveChart = new Chart(ctxGraph).Line(startingData, {animationSteps: 7});
+    CanvasGraphFactory.init('graph');
+    var myLiveChart = CanvasGraphFactory.getGraph();
+
     //bar chart
-    var myBarChart = new Chart(ctxBarChar).Bar(data, {});
+    CanvasBarChartFactory.init('barChar');
+    var myBarChart = CanvasBarChartFactory.getBarChart();
 
     var nbrOfDistinct = 0;
 
@@ -66,7 +36,7 @@ function poc2Controller($scope, $interval, $http) {
                 var t = (1 / $scope.graphConfig.frequency); //intervle in seconde
                 myLiveChart.addData([res.data.DS1, res.data.DS2], (xGraph * t) + 's');
                 // shifting our view
-                if (xGraph > $scope.MAX_VIEW_PORT) myLiveChart.removeData();
+                if (xGraph > MAX_VIEW_PORT) myLiveChart.removeData();
                 xGraph++;
                 $scope.metadata.nbrOfSamples++;
                 //new random frequency between [1 hz, 25 hz]
@@ -80,7 +50,7 @@ function poc2Controller($scope, $interval, $http) {
         myBarChart.addData([nbrOfDistinct], xBar + 'min'); //intervle of 1 minute
         nbrOfDistinct = 0; //reset the nbr of collision for the next minute
         // shifting our view
-        if (xBar > $scope.MAX_VIEW_PORT) myBarChart.removeData();
+        if (xBar > MAX_VIEW_PORT) myBarChart.removeData();
         xBar++;
     };
     var intervalBar = $interval(updateBar, 1000 * 60); //update the bar chat on 1 min interval
