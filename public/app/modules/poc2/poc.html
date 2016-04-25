@@ -1,1 +1,32 @@
-poc 2
+<div class="row">
+    <div class="col-md-10">
+        <canvas id="graph" width="1000" height="300"></canvas>
+    </div>
+    <div class="col-md-2 no-print">
+        </br> Frequency [<b>1hz</b>, <b>25hz</b>]:
+        <input type="number" class="form-control" ng-click="updateConfig()" ng-model="graphConfig.frequency" /></br>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10">
+        <canvas id="barChar" width="1000" height="300"></canvas>
+    </div>
+    <div class="col-md-2">
+        <b>Start date:</b></br>
+        {{metadata.startDate | date:"MM/dd/yyyy 'at' h:mma"}}</br>
+        <hr>
+        <b>Total number of Sample:</b></br>
+        {{metadata.nbrOfSamples}}</br>
+        <hr>
+        <b>Total number of distinct:</b></br>
+        {{metadata.nbrOfTotalDistinct}}</br>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+       fff
+    </div>
+    <div class="col-md-6">
+       ccc
+    </div>
+</div>

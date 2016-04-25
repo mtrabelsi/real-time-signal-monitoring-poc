@@ -2,7 +2,7 @@ angular
     .module('app.poc1', ['ui.router'])
     .controller('Poc1Controller', poc1Controller);
 
-function poc1Controller($scope, $http, $interval) {
+function poc1Controller($scope, $http, $interval, $window) {
 
     $scope.metadata = {
         startDate: new Date(),
@@ -58,7 +58,7 @@ function poc1Controller($scope, $http, $interval) {
 
     var xGraph = 0;
     var updateGraph = function() {
-        $http.get('/data')
+        $http.get('/data/poc1')
             .then(function(res) {
                 if (res.data.DS1 == res.data.DS2) {
                     nbrOfCollision++;
@@ -100,7 +100,7 @@ function poc1Controller($scope, $http, $interval) {
     }, true);
 
     $scope.printReport = function() {
-        window.print();
+        $window.print();
     };
 
 }
