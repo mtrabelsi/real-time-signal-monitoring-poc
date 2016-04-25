@@ -34,7 +34,7 @@ function poc2Controller(CanvasGraphFactory, CanvasBarChartFactory, MAX_VIEW_PORT
                     $scope.metadata.nbrOfTotalDistinct++;
                 }
                 var t = (1 / $scope.graphConfig.frequency); //intervle in seconde
-                myLiveChart.addData([res.data.DS1, res.data.DS2], (xGraph * t) + 's');
+                myLiveChart.addData([res.data.DS1, res.data.DS2], (xGraph * t).toFixed(1) + 's');
                 // shifting our view
                 if (xGraph > MAX_VIEW_PORT) myLiveChart.removeData();
                 xGraph++;
