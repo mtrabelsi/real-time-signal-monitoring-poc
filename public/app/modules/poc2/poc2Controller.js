@@ -2,7 +2,7 @@ angular
     .module('app.poc2', ['ui.router'])
     .controller('Poc2Controller', poc2Controller);
 
-function poc2Controller(CanvasGraphFactory,eBook, CanvasBarChartFactory, MAX_VIEW_PORT, GRAPH_CONFIG, $scope, $interval, $http) {
+function poc2Controller(CanvasGraphFactory, eBook, CanvasBarChartFactory, MAX_VIEW_PORT, GRAPH_CONFIG, $scope, $interval, $http) {
     $scope.metadata = {
         startDate: new Date(),
         nbrOfSamples: 0,
@@ -12,7 +12,7 @@ function poc2Controller(CanvasGraphFactory,eBook, CanvasBarChartFactory, MAX_VIE
     $scope.graphConfig = {
         frequency: GRAPH_CONFIG.frequency
     };
-    
+
     $scope.generatedWords = {
         fromDS1: '',
         fromDS2: ''
@@ -45,8 +45,8 @@ function poc2Controller(CanvasGraphFactory,eBook, CanvasBarChartFactory, MAX_VIE
                 //new random frequency between [1 hz, 25 hz]
                 $scope.graphConfig.frequency = Math.floor((Math.random() * 25) + 1);
 
-                $scope.generatedWords.fromDS1 += ' '+eBook.data[res.data.DS1];
-                $scope.generatedWords.fromDS2 += ' '+eBook.data[res.data.DS2];
+                $scope.generatedWords.fromDS1 += ' ' + eBook.data[res.data.DS1];
+                $scope.generatedWords.fromDS2 += ' ' + eBook.data[res.data.DS2];
             });
     };
 
@@ -78,7 +78,10 @@ function poc2Controller(CanvasGraphFactory,eBook, CanvasBarChartFactory, MAX_VIE
     }
 
     $scope.download = function() {
-        //alert('ok');
+        var blob1 = new Blob([$scope.generatedWords.fromDS1], { type: "text/plain;charset=utf-8" });
+        var blob2 = new Blob([$scope.generatedWords.fromDS2], { type: "text/plain;charset=utf-8" });
+        saveAs(blob1, "DS1.txt");
+        saveAs(blob2, "DS2.txt");
     }
 
 }

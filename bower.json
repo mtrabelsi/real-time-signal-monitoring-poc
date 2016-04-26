@@ -19,6 +19,7 @@
     "bootstrap": "^3.3.6",
     "angular": "^1.5.4",
     "angular-ui-router": "^0.2.18",
-    "angular-chart.js": "^0.10.0"
+    "angular-chart.js": "^0.10.0",
+    "file-saver.js": "^1.20150507.2"
   }
 }
