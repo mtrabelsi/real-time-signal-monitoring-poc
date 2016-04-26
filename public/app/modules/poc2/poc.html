@@ -1,10 +1,26 @@
 <div class="row">
+    <div class="col-md-6">
+        <input type="checkbox" class="input-group" ng-true-value="'visible'" ng-false-value="'hidden'" ng-model="check" />
+        <div ng-show="check == 'hidden'"> Click me to see real time shakespeare Book</div>
+        <div ng-show="check == 'visible'">Please scroll down to see the two added columns.</div>
+    </div>
+    <div class="col-md-6">
+      <button ng-click="stop()" class="btn btn-lg btn-default">
+            <span class="glyphicon glyphicon-stop" aria-hidden="true"></span> Stop 
+        </button>
+        <button ng-click="download()" class="btn btn-lg btn-default">
+            <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> Download
+        </button>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-10">
         <canvas id="graph" width="1000" height="300"></canvas>
     </div>
     <div class="col-md-2 no-print">
         </br> Frequency [<b>1hz</b>, <b>25hz</b>]:
-        <input type="number" class="form-control" ng-click="updateConfig()" ng-model="graphConfig.frequency" /></br>
+        <input type="number" class="form-control" ng-click="updateConfig()" ng-model="graphConfig.frequency" />
+        </br>
     </div>
 </div>
 <div class="row">
@@ -24,9 +40,9 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-       fff
+        <div ng-show="check == 'visible'">{{generatedWords.fromDS1}}</div>
     </div>
     <div class="col-md-6">
-       ccc
+        <div ng-show="check == 'visible'">{{generatedWords.fromDS2}}</div>
     </div>
 </div>

@@ -6,6 +6,14 @@ angular
             .state('poc2', {
                 url: '/poc2',
                 templateUrl: 'app/modules/poc2/poc.html',
-                controller: 'Poc2Controller'
+                controller: 'Poc2Controller',
+                resolve: {
+                    eBook: function($http) {
+                        return $http.get('/book')
+                            .then(function(book) {
+                                return book;
+                            });
+                    }
+                }
             })
     });

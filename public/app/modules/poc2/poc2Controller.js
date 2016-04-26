@@ -2,9 +2,8 @@ angular
     .module('app.poc2', ['ui.router'])
     .controller('Poc2Controller', poc2Controller);
 
-function poc2Controller(CanvasGraphFactory, CanvasBarChartFactory, MAX_VIEW_PORT,GRAPH_CONFIG, $scope, $interval, $http) {
-
-	 $scope.metadata = {
+function poc2Controller(CanvasGraphFactory,eBook, CanvasBarChartFactory, MAX_VIEW_PORT, GRAPH_CONFIG, $scope, $interval, $http) {
+    $scope.metadata = {
         startDate: new Date(),
         nbrOfSamples: 0,
         nbrOfTotalDistinct: 0
@@ -13,7 +12,11 @@ function poc2Controller(CanvasGraphFactory, CanvasBarChartFactory, MAX_VIEW_PORT
     $scope.graphConfig = {
         frequency: GRAPH_CONFIG.frequency
     };
-
+    
+    $scope.generatedWords = {
+        fromDS1: '',
+        fromDS2: ''
+    };
 
     // discret graph
     CanvasGraphFactory.init('graph');
@@ -41,6 +44,9 @@ function poc2Controller(CanvasGraphFactory, CanvasBarChartFactory, MAX_VIEW_PORT
                 $scope.metadata.nbrOfSamples++;
                 //new random frequency between [1 hz, 25 hz]
                 $scope.graphConfig.frequency = Math.floor((Math.random() * 25) + 1);
+
+                $scope.generatedWords.fromDS1 += ' '+eBook.data[res.data.DS1];
+                $scope.generatedWords.fromDS2 += ' '+eBook.data[res.data.DS2];
             });
     };
 
@@ -64,5 +70,15 @@ function poc2Controller(CanvasGraphFactory, CanvasBarChartFactory, MAX_VIEW_PORT
         }
 
     }, true);
+
+
+    $scope.stop = function() {
+        $interval.cancel(intervalGraph);
+        $interval.cancel(intervalBar);
+    }
+
+    $scope.download = function() {
+        //alert('ok');
+    }
 
 }

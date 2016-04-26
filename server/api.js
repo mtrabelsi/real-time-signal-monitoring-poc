@@ -67,9 +67,10 @@ app.get('/data/poc2', function(req, res, next) {
 
 });
 
-app.get('/word/:wordIndex', function(req, res, next) {
+app.get('/book', function(req, res, next) {
     helper.getShakespeareContent().then(function(shakespeareBook) {
-        var index = req.params.wordIndex;
-        (index >= 0) ? res.send(shakespeareBook[index]): res.send('no luck :( ');
+        res.json(shakespeareBook);
+    },function(error){
+        console.log(error);
     });
 });
