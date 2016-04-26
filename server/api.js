@@ -3,7 +3,6 @@ var app = require('./app.js');
 var utils = require('./utils/utils');
 
 var helper = require('./utils/helper');
-
 //the require is a singleton so the change will affect all the api
 var constant = require('./utils/constant'); //we're gonna change this by api
 
@@ -18,9 +17,7 @@ app.get('/range', function(req, res, next) {
     res.json(constant);
 });
 
-
 app.get('/data/poc1', function(req, res, next) {
-
     var data = {
         DS1: null,
         DS2: null
@@ -39,12 +36,9 @@ app.get('/data/poc1', function(req, res, next) {
     }, function(error) {
         console.log('failed on the /dev/urandom module:', error);
     });
-
-
 });
 
 app.get('/data/poc2', function(req, res, next) {
-
     var data = {
         DS1: null,
         DS2: null
@@ -63,8 +57,6 @@ app.get('/data/poc2', function(req, res, next) {
     }, function(error) {
         console.log('failed on the /dev/urandom module:', error);
     });
-
-
 });
 
 app.get('/book', function(req, res, next) {

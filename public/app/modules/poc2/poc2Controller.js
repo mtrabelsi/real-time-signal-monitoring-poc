@@ -50,7 +50,6 @@ function poc2Controller(CanvasGraphFactory, eBook, CanvasBarChartFactory, MAX_VI
             });
     };
 
-
     var xBar = 1;
     var updateBar = function() {
         myBarChart.addData([nbrOfDistinct], xBar + 'min'); //intervle of 1 minute
@@ -71,7 +70,6 @@ function poc2Controller(CanvasGraphFactory, eBook, CanvasBarChartFactory, MAX_VI
 
     }, true);
 
-
     $scope.stop = function() {
         $interval.cancel(intervalGraph);
         $interval.cancel(intervalBar);
@@ -83,5 +81,4 @@ function poc2Controller(CanvasGraphFactory, eBook, CanvasBarChartFactory, MAX_VI
         saveAs(blob1, "DS1.txt");
         saveAs(blob2, "DS2.txt");
     }
-
 }
